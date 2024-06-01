@@ -3,17 +3,17 @@ all: run
 clean:
 	rm -f out/*.jar
 
-out/FermatTask.jar: out/parcs.jar src/FermatTask.java
-	@javac -cp out/parcs.jar --release 11 src/FermatTask.java
-	@jar cf out/FermatTask.jar -C src FermatTask.class
-	@rm -f src/FermatTask.class
+out/FermatTest.jar: out/parcs.jar src/FermatTest.java
+	@javac -cp out/parcs.jar --release 11 src/FermatTest.java
+	@jar cf out/FermatTest.jar -C src FermatTest.class
+	@rm -f src/FermatTest.class
 
-out/FermatHost.jar: out/parcs.jar src/FermatHost.java
-	@javac -cp out/parcs.jar --release 11 src/FermatHost.java
-	@jar cf out/FermatHost.jar -C src FermatHost.class
-	@rm -f src/FermatHost.class
+out/FermatTestApplication.jar: out/parcs.jar src/FermatTestApplication.java
+	@javac -cp out/parcs.jar --release 11 src/FermatTestApplication.java
+	@jar cf out/FermatTestApplication.jar -C src FermatTestApplication.class
+	@rm -f src/FermatTestApplication.class
 
-build: out/FermatTask.jar out/FermatHost.jar
+build: out/FermatTest.jar out/FermatTestApplication.jar
 
-run: out/FermatHost.jar out/FermatTask.jar
-	@cd out && java -cp "FermatHost.jar:parcs.jar" FermatHost
+run: out/FermatTestApplication.jar out/FermatTest.jar
+	@cd out && java -cp "FermatTestApplication.jar:parcs.jar" FermatTestApplication

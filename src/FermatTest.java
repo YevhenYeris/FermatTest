@@ -1,9 +1,8 @@
 import parcs.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class FermatTask implements AM {
+public class FermatTest implements AM {
 
     public void run(AMInfo info) {
         ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
@@ -18,35 +17,27 @@ public class FermatTask implements AM {
     }
 
     static long power(long x, long y, long p) {
-        long res = 1; // Initialize result
-        x = x % p; // Update x if it is more than or equal to p
+        long res = 1;
+        x = x % p;
 
         while (y > 0) {
-            // If y is odd, multiply x with the result
             if ((y & 1) == 1) {
                 res = (res * x) % p;
             }
 
-            // y must be even now
-            y = y >> 1; // y = y/2
-            x = (x * x) % p; // Change x to x^2
+            y = y >> 1;
+            x = (x * x) % p;
         }
         return res;
     }
 
-    // Method to check if a number is prime using Fermat's little theorem
     static boolean fermatTest(int n, int k) {
-        // Corner cases
         if (n <= 1 || n == 4) return false;
         if (n <= 3) return true;
 
-        // Try k times
         for (int i = 0; i < k; i++) {
-            // Pick a random number in [2, n-2]
-            // n-4 is chosen to avoid overflow when n is large
             int a = 2 + (int)(Math.random() % (n - 4));
 
-            // Fermat's little theorem
             if (power(a, n - 1, n) != 1) {
                 return false;
             }
