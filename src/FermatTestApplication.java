@@ -49,6 +49,7 @@ public class FermatTestApplication {
 
         StringBuilder finalResult = new StringBuilder();
 
+        System.out.println("Starting timer...");
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < workersNumber; i++) {
@@ -62,10 +63,10 @@ public class FermatTestApplication {
         }
 
         writeOutputData(outputFile, finalResult.toString());
-        System.out.println("Finished");
+        System.out.println("Finished.");
 
         long finish = System.currentTimeMillis();
-        System.out.println("Time elapsed: " + (finish - start));
+        System.out.println("Time elapsed: " + (finish - start)/1000 + " seconds.");
 
         task.end();
     }
