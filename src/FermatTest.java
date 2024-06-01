@@ -18,15 +18,8 @@ public class FermatTest implements AM {
 
     static long power(long x, long y, long p) {
         long res = 1;
-        x = x % p;
-
-        while (y > 0) {
-            if ((y & 1) == 1) {
-                res = (res * x) % p;
-            }
-
-            y = y >> 1;
-            x = (x * x) % p;
+        for (long i = 0; i < y; i++) {
+            res = (res * x) % p;
         }
         return res;
     }
@@ -36,7 +29,7 @@ public class FermatTest implements AM {
         if (n <= 3) return true;
 
         for (int i = 0; i < k; i++) {
-            int a = 2 + (int)(Math.random() % (n - 4));
+            int a = 2 + (int)(Math.random() * (n - 4)); // Fixed random generation
 
             if (power(a, n - 1, n) != 1) {
                 return false;
@@ -44,5 +37,4 @@ public class FermatTest implements AM {
         }
         return true;
     }
-
 }
