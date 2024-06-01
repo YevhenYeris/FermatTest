@@ -16,11 +16,18 @@ public class FermatTest implements AM {
         info.parent.write(results);
     }
 
-    static long power(long x, long y, long p) {
+    static long nestedPower(long x, long y, long p) {
         long res = 1;
+
         for (long i = 0; i < y; i++) {
-            res = (res * x) % p;
+            long tempRes = 0;
+
+            for (long j = 0; j < x; j++) {
+                tempRes = (tempRes + res) % p;
+            }
+            res = tempRes;
         }
+
         return res;
     }
 
@@ -29,9 +36,9 @@ public class FermatTest implements AM {
         if (n <= 3) return true;
 
         for (int i = 0; i < k; i++) {
-            int a = 2 + (int)(Math.random() * (n - 4)); // Fixed random generation
+            int a = 2 + (int)(Math.random() * (n - 4));
 
-            if (power(a, n - 1, n) != 1) {
+            if (nestedPower(a, n - 1, n) != 1) {
                 return false;
             }
         }
