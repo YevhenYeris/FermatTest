@@ -66,7 +66,7 @@ public class FermatTestApplication {
         System.out.println("Finished.");
 
         long finish = System.currentTimeMillis();
-        System.out.println("Time elapsed: " + (finish - start)/1000 + " seconds.");
+        System.out.println("Time elapsed: " + (double)(finish - start)/1000 + " seconds.");
 
         task.end();
     }
