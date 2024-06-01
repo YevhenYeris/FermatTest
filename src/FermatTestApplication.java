@@ -49,6 +49,8 @@ public class FermatTestApplication {
 
         StringBuilder finalResult = new StringBuilder();
 
+        long start = System.currentTimeMillis();
+
         for (int i = 0; i < workersNumber; i++) {
             System.out.println("Running worker #" + i + "...");
             boolean[] result = (boolean[]) channels[i].readObject();
@@ -61,6 +63,10 @@ public class FermatTestApplication {
 
         writeOutputData(outputFile, finalResult.toString());
         System.out.println("Finished");
+
+        long finish = System.currentTimeMillis();
+        System.out.println("Time elapsed: " + (finish - start));
+
         task.end();
     }
 
