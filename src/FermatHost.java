@@ -9,25 +9,20 @@ import java.io.File;
 
 public class FermatHost {
 
-    private static final String INPUT_FILE_NAME = "input5M.txt";
-    private static final String OUTPUT_FILE_NAME = "output5M.txt";
-    private static final int WORKERS_AMOUNT = 4;
-
-    private static final String TASK_JAR_NAME = "FermatTask.jar";
-    private static final String TASK_CLASS_NAME = "FermatTask";
-
-    private static final String POSTFIX_PRIME = " - Prime\n";
-    private static final String POSTFIX_NOT_PRIME = " - Not Prime\n";
-
     public static void main(String[] args) throws Exception {
-        task curTask = new task();
-        curTask.addJarFile(TASK_JAR_NAME);
 
-        String fileName = curTask.findFile(INPUT_FILE_NAME);
+        String inputFile = System.getenv("INPUT_FILE");
+        String outputFile = System.getenv("OUTPUT_FILE");
+        String workersNumber = System.getenv("WORKERS_NUMBER");
+
+        task curTask = new task();
+        curTask.addJarFile("FermatTask.jar");
+
+        String fileName = curTask.findFile(inputFile);
         int k = readKFromInput(fileName);
         ArrayList<Integer> values = readInputData(fileName);
 
-        int numWorkers = WORKERS_AMOUNT;
+        int numWorkers = Integer.parseInt(workersNumber);
         int chunkSize = values.size() / numWorkers;
 
         AMInfo info = new AMInfo(curTask, null);
@@ -38,7 +33,7 @@ public class FermatHost {
         for (int currentWorkerIndex = 0; currentWorkerIndex < numWorkers; currentWorkerIndex++) {
             points[currentWorkerIndex] = info.createPoint();
             channels[currentWorkerIndex] = points[currentWorkerIndex].createChannel();
-            points[currentWorkerIndex].execute(TASK_CLASS_NAME);
+            points[currentWorkerIndex].execute("FermatTask");
 
             int startIndex = currentWorkerIndex * chunkSize;
             int endIndex = (currentWorkerIndex == numWorkers - 1) ? values.size() - 1 : startIndex + chunkSize - 1;
@@ -56,11 +51,11 @@ public class FermatHost {
             for (int j = 0; j < result.length; j++) {
                 boolean isPrime = result[j];
                 finalResult.append(values.get(i * chunkSize + j));
-                finalResult.append(isPrime ? POSTFIX_PRIME : POSTFIX_NOT_PRIME);
+                finalResult.append(isPrime ? " is prime" : " is not prime");
             }
         }
 
-        writeOutputToFile(OUTPUT_FILE_NAME, finalResult.toString());
+        writeOutputToFile(outputFile, finalResult.toString());
         System.out.println("Task completed");
         curTask.end();
     }
