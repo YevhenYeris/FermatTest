@@ -17,64 +17,41 @@ public class FermatTask implements AM {
         info.parent.write(results);
     }
 
-    private static boolean fermatTest(int n, int k) {
-        if (n % 2 == 0 || n <= 1) {
-            return false;
+    static long power(long x, long y, long p) {
+        long res = 1; // Initialize result
+        x = x % p; // Update x if it is more than or equal to p
+
+        while (y > 0) {
+            // If y is odd, multiply x with the result
+            if ((y & 1) == 1) {
+                res = (res * x) % p;
+            }
+
+            // y must be even now
+            y = y >> 1; // y = y/2
+            x = (x * x) % p; // Change x to x^2
         }
+        return res;
+    }
 
-        int m = (n - 1) / 2;
-        int t = 1;
-        while (m % 2 == 0) {
-            m /= 2;
-            t++;
-        }
+    // Method to check if a number is prime using Fermat's little theorem
+    static boolean fermatTest(int n, int k) {
+        // Corner cases
+        if (n <= 1 || n == 4) return false;
+        if (n <= 3) return true;
 
-        Random random = new Random();
+        // Try k times
+        for (int i = 0; i < k; i++) {
+            // Pick a random number in [2, n-2]
+            // n-4 is chosen to avoid overflow when n is large
+            int a = 2 + (int)(Math.random() % (n - 4));
 
-        for (int i = 1; i <= k; i++) {
-            int a = 1 + random.nextInt(n - 1);
-            t++;
-            int u = modPow(a, m, n);
-
-            if (u != 1 && u != n - 1) {
-                int j = 1;
-                boolean isSkip = false;
-
-                while (u != -1 && j < t) {
-                    u = (u * u) % n;
-                    j++;
-                    if (u == 1) {
-                        return false;
-                    }
-                    if (u == n - 1) {
-                        isSkip = true;
-                        break;
-                    }
-                }
-
-                if (isSkip) {
-                    continue;
-                }
-                if (u != -1) {
-                    return false;
-                }
+            // Fermat's little theorem
+            if (power(a, n - 1, n) != 1) {
+                return false;
             }
         }
         return true;
     }
 
-    private static int modPow(int base, int exp, int mod) {
-        int result = 1;
-        base = base % mod;
-
-        while (exp > 0) {
-            if ((exp & 1) == 1) {  // If exp is odd
-                result = (result * base) % mod;
-            }
-            exp >>= 1;  // Right shift exp by 1
-            base = (base * base) % mod;
-        }
-
-        return result;
-    }
 }
