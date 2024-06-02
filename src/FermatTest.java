@@ -1,8 +1,5 @@
 import parcs.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class FermatTest implements AM {
@@ -13,7 +10,7 @@ public class FermatTest implements AM {
 
         ArrayList<Integer> numbers = getInputData(data.get(1), data.get(2));
 
-        writeOutputData("test.txt", "Processing numbers: [" + numbers.get(0) + ", " + numbers.get(numbers.size() - 1) + "].");
+        System.out.println("Processing numbers: [" + numbers.get(0) + ", " + numbers.get(numbers.size() - 1) + "].");
 
         boolean[] results = new boolean[numbers.size()];
 
@@ -22,15 +19,6 @@ public class FermatTest implements AM {
         }
 
         info.parent.write(results);
-    }
-
-    private static void writeOutputData(String filename, String data) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(data);
-            System.out.println("Output: " + filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     static long power(long x, long y, long p) {
