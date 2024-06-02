@@ -11,26 +11,13 @@ public class FermatTest implements AM {
         ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
         int k = data.get(0);
 
-        ArrayList<Integer> numbers = getInputData(data.get(1), data.get(2));
+        boolean[] results = new boolean[data.get(2) - data.get(1) + 1];
 
-        writeOutputData("/home/ierisievgen/test.txt", "Processing numbers: [" + numbers.get(0) + ", " + numbers.get(numbers.size() - 1) + "].");
-
-        boolean[] results = new boolean[numbers.size()];
-
-        for (int i = 0; i < numbers.size(); i++) {
-            results[i] = fermatTest(numbers.get(i), k);
+        for (int i = data.get(1); i < data.get(2); i++) {
+            results[i - 1] = fermatTest(i, k);
         }
 
         info.parent.write(results);
-    }
-
-    private static void writeOutputData(String filename, String data) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(data);
-            System.out.println("Output: " + filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     static long power(long x, long y, long p) {
@@ -60,15 +47,5 @@ public class FermatTest implements AM {
             }
         }
         return true;
-    }
-
-    private static ArrayList<Integer> getInputData(int startIndex, int endIndex) {
-        ArrayList<Integer> values = new ArrayList<>();
-
-        for (int i = startIndex; i <= endIndex; ++i) {
-            values.add(i);
-        }
-
-        return values;
     }
 }
