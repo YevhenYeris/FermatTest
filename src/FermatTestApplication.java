@@ -52,7 +52,7 @@ public class FermatTestApplication {
             data.add(startIndex + 1);
             data.add(endIndex + 1);
 
-            System.out.println("Data: " + data.get(0) + ", " + data.get(1) + ", " + data.get(2) + "].");
+            System.out.println("Data: [" + data.get(0) + ", " + data.get(1) + ", " + data.get(2) + "].");
 
             channels[i].write(data);
         }
