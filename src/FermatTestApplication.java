@@ -49,7 +49,7 @@ public class FermatTestApplication {
 
             ArrayList<Integer> data = new ArrayList<>();
             data.add(k);
-            data.add(startIndex);
+            data.add(startIndex + 1);
             data.add(endIndex + 1);
 
             channels[i].write(data);
@@ -64,8 +64,10 @@ public class FermatTestApplication {
             System.out.println("Running worker #" + i + "...");
             boolean[] result = (boolean[]) channels[i].readObject();
             for (int j = 0; j < result.length; j++) {
+                System.out.println("Result i: " + j);
+                System.out.println("i * chunkSize + j: " + i * chunkSize + j);
                 boolean isPrime = result[j];
-                finalResult.append(i * chunkSize + j + 1);
+                finalResult.append(i * chunkSize + j);
                 finalResult.append(isPrime ? " is prime\n" : " is not prime\n");
             }
         }
