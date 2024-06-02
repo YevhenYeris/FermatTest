@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class FermatTest implements AM {
 
     public void run(AMInfo info) {
+        System.out.println("From worker");
         ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
         int k = data.get(0);
         boolean[] results = new boolean[data.size() - 1];
