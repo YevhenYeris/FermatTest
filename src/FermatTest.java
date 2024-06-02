@@ -7,15 +7,10 @@ public class FermatTest implements AM {
     public void run(AMInfo info) {
         ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
         int k = data.get(0);
+        boolean[] results = new boolean[data.size() - 1];
 
-        ArrayList<Integer> numbers = getInputData(data.get(1), data.get(2));
-
-        System.out.println("Processing numbers: [" + numbers.getFirst() + ", " + numbers.getLast() + "].");
-
-        boolean[] results = new boolean[numbers.size()];
-
-        for (int i = 0; i < data.size(); i++) {
-            results[i] = fermatTest(numbers.get(i), k);
+        for (int i = 1; i < data.size(); i++) {
+            results[i - 1] = fermatTest(data.get(i), k);
         }
 
         info.parent.write(results);
@@ -48,15 +43,5 @@ public class FermatTest implements AM {
             }
         }
         return true;
-    }
-
-    private static ArrayList<Integer> getInputData(int startIndex, int endIndex) {
-        ArrayList<Integer> values = new ArrayList<>();
-
-        for (int i = startIndex; i < endIndex; ++i) {
-            values.add(i + 1);
-        }
-
-        return values;
     }
 }

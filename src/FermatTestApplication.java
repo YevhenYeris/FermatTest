@@ -11,26 +11,26 @@ public class FermatTestApplication {
 
     public static void main(String[] args) throws Exception {
 
-        String inputValueString = System.getenv("INPUT_VALUE");
-        System.out.println("Read INPUT_VALUE: " + inputValueString + ".");
+        String inputValue = System.getenv("INPUT_VALUE");
+        System.out.println("Read INPUT_VALUE: " + inputValue + ".");
 
         String testPrecision = System.getenv("TEST_PRECISION");
-        System.out.println("Read TEST_PRECISION: " + testPrecision + ".");
+        System.out.println("Read TEST_PRECISION: " + inputValue + ".");
 
         String outputFile = System.getenv("OUTPUT_FILE");
-        System.out.println("Read OUTPUT_FILE: " + outputFile + ".");
+        System.out.println("Read OUTPUT_FILE: " + inputValue + ".");
 
         String workersNumberString = System.getenv("WORKERS_NUMBER");
-        System.out.println("Read WORKERS_NUMBER: " + workersNumberString + ".");
+        System.out.println("Read WORKERS_NUMBER: " + inputValue + ".");
 
         task task = new task();
         task.addJarFile("FermatTest.jar");
 
         int k = Integer.parseInt(testPrecision);
-        int inputValue = Integer.parseInt(inputValueString);
+        ArrayList<Integer> values = getInputData(inputValue);
 
         int workersNumber = Integer.parseInt(workersNumberString);
-        int chunkSize = inputValue / workersNumber;
+        int chunkSize = values.size() / workersNumber;
 
         AMInfo amInfo = new AMInfo(task, null);
 
@@ -43,14 +43,13 @@ public class FermatTestApplication {
             points[i].execute("FermatTest");
 
             int startIndex = i * chunkSize;
-            int endIndex = (i == workersNumber - 1) ? inputValue - 1 : startIndex + chunkSize - 1;
+            int endIndex = (i == workersNumber - 1) ? values.size() - 1 : startIndex + chunkSize - 1;
 
             System.out.println("Worker #" + i + ": processing the range [" + (startIndex + 1) + ", " + (endIndex + 1) + "].");
 
             ArrayList<Integer> data = new ArrayList<>();
             data.add(k);
-            data.add(startIndex);
-            data.add(endIndex + 1);
+            data.addAll(values.subList(startIndex, endIndex + 1));
 
             channels[i].write(data);
         }
@@ -65,7 +64,7 @@ public class FermatTestApplication {
             boolean[] result = (boolean[]) channels[i].readObject();
             for (int j = 0; j < result.length; j++) {
                 boolean isPrime = result[j];
-                finalResult.append(i * chunkSize + j + 1);
+                finalResult.append(values.get(i * chunkSize + j));
                 finalResult.append(isPrime ? " is prime\n" : " is not prime\n");
             }
         }
@@ -86,5 +85,23 @@ public class FermatTestApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static int getPrecisionNumber(String filename) throws Exception {
+        Scanner sc = new Scanner(new File(filename));
+        int k = Integer.parseInt(sc.nextLine());
+        sc.close();
+        return k;
+    }
+
+    private static ArrayList<Integer> getInputData(String inputValue) throws Exception {
+        int numbersTotal = Integer.parseInt(inputValue);
+        ArrayList<Integer> values = new ArrayList<>();
+
+        for (int i = 1; i <= numbersTotal; ++i) {
+            values.add(i);
+        }
+
+        return values;
     }
 }
