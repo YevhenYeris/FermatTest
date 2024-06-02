@@ -13,28 +13,8 @@ public class FermatTest implements AM {
 
         boolean[] results = new boolean[data.get(2) - data.get(1) + 1];
 
-//        for (int i = data.get(1); i < data.get(2); i++) {
-//            results[i - 1] = fermatTest(i, k);
-//        }
-
-        for (int i = 0; i < data.get(1); i++) {
-            results[i] = fermatTest(i, k);
-        }
-
         for (int i = data.get(1); i < data.get(2); i++) {
-            results[i] = fermatTest(i, k);
-        }
-
-        for (int i = data.get(2); i < data.get(3); i++) {
-            results[i] = fermatTest(i, k);
-        }
-
-        for (int i = data.get(3); i < data.get(4); i++) {
-            results[i] = fermatTest(i, k);
-        }
-
-        for (int i = data.get(4); i < data.get(5); i++) {
-            results[i] = fermatTest(i, k);
+            results[i - 1] = fermatTest(i, k);
         }
 
         info.parent.write(results);
