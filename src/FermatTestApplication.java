@@ -11,16 +11,16 @@ public class FermatTestApplication {
 
     public static void main(String[] args) throws Exception {
 
-        String inputValue = System.getenv("INPUT_VALUE");
-        String testPrecision = System.getenv("TEST_PRECISION");
+        String inputFile = System.getenv("INPUT_FILE");
         String outputFile = System.getenv("OUTPUT_FILE");
         String workersNumberString = System.getenv("WORKERS_NUMBER");
 
         task task = new task();
         task.addJarFile("FermatTest.jar");
 
-        int k = Integer.parseInt(testPrecision);
-        ArrayList<Integer> values = getInputData(inputValue);
+        String fileName = task.findFile(inputFile);
+        int k = readIterationsNumber(fileName);
+        ArrayList<Integer> values = readInputData(fileName);
 
         int workersNumber = Integer.parseInt(workersNumberString);
         int chunkSize = values.size() / workersNumber;
@@ -80,21 +80,25 @@ public class FermatTestApplication {
         }
     }
 
-    private static int getPrecisionNumber(String filename) throws Exception {
+    private static int readIterationsNumber(String filename) throws Exception {
         Scanner sc = new Scanner(new File(filename));
         int k = Integer.parseInt(sc.nextLine());
         sc.close();
         return k;
     }
 
-    private static ArrayList<Integer> getInputData(String inputValue) throws Exception {
-        int numbersTotal = Integer.parseInt(inputValue);
+    private static ArrayList<Integer> readInputData(String filename) throws Exception {
+        Scanner sc = new Scanner(new File(filename));
+        sc.nextLine();
         ArrayList<Integer> values = new ArrayList<>();
-
-        for (int i = 1; i <= numbersTotal; ++i) {
-            values.add(i);
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (line.isEmpty()) {
+                break;
+            }
+            values.add(Integer.parseInt(line));
         }
-
+        sc.close();
         return values;
     }
 }
