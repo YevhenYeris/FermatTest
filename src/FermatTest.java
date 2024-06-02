@@ -16,8 +16,6 @@ public class FermatTest implements AM {
         System.out.println("Result size is = " + results.length);
 
         for (int i = 1; i < data.size(); i++) {
-            System.out.println("Processing number = " + data.get(i));
-
             results[i - 1] = fermatTest(data.get(i), k);
         }
 
