@@ -10,7 +10,7 @@ public class FermatTest implements AM {
 
         ArrayList<Integer> numbers = getInputData(data.get(1), data.get(2));
 
-        System.out.println("Processing numbers: [" + numbers.getFirst() + ", " + numbers.getLast() + "].");
+        System.out.println("Processing numbers: [" + numbers.get(0) + ", " + numbers.get(numbers.size() - 1) + "].");
 
         boolean[] results = new boolean[numbers.size()];
 
