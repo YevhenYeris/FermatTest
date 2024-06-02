@@ -19,8 +19,13 @@ public class FermatTestApplication {
         task.addJarFile("FermatTest.jar");
 
         String fileName = task.findFile(inputFile);
-        int k = readIterationsNumber(fileName);
+        int k = readPrecisionNumber(fileName);
+
+        System.out.println("Precision: k = " + k);
+
         ArrayList<Integer> values = readInputData(fileName);
+
+        System.out.println("Values to process: " + values.size());
 
         int workersNumber = Integer.parseInt(workersNumberString);
         int chunkSize = values.size() / workersNumber;
@@ -80,7 +85,7 @@ public class FermatTestApplication {
         }
     }
 
-    private static int readIterationsNumber(String filename) throws Exception {
+    private static int readPrecisionNumber(String filename) throws Exception {
         Scanner sc = new Scanner(new File(filename));
         int k = Integer.parseInt(sc.nextLine());
         sc.close();
