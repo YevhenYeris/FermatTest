@@ -53,8 +53,8 @@ public class FermatTest implements AM {
     private static ArrayList<Integer> getInputData(int startIndex, int endIndex) {
         ArrayList<Integer> values = new ArrayList<>();
 
-        for (int i = startIndex; i <= endIndex; ++i) {
-            values.add(i);
+        for (int i = startIndex; i < endIndex; ++i) {
+            values.add(i + 1);
         }
 
         return values;
