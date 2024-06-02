@@ -14,7 +14,7 @@ public class FermatTest implements AM {
 
         boolean[] results = new boolean[numbers.size()];
 
-        for (int i = 0; i < numbers.size(); i++) {
+        for (int i = 0; i < data.size(); i++) {
             results[i] = fermatTest(numbers.get(i), k);
         }
 
