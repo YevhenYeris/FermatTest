@@ -13,10 +13,10 @@ public class FermatTest implements AM {
 
         boolean[] results = new boolean[data.size() - 1];
 
-        System.out.println("Result size is + " + results.length);
+        System.out.println("Result size is = " + results.length);
 
         for (int i = 1; i < data.size(); i++) {
-            System.out.println("Processing number + " + data.get(i));
+            System.out.println("Processing number = " + data.get(i));
 
             results[i - 1] = fermatTest(data.get(i), k);
         }
@@ -28,16 +28,9 @@ public class FermatTest implements AM {
 
     static long nestedPower(long x, long y, long p) {
         long res = 1;
-
         for (long i = 0; i < y; i++) {
-            long tempRes = 0;
-
-            for (long j = 0; j < x; j++) {
-                tempRes = (tempRes + res) % p;
-            }
-            res = tempRes;
+            res = (res * x) % p;
         }
-
         return res;
     }
 
