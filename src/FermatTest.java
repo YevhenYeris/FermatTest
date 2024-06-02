@@ -8,11 +8,20 @@ public class FermatTest implements AM {
         System.out.println("From worker");
         ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
         int k = data.get(0);
+
+        System.out.println("Received k = " + k);
+
         boolean[] results = new boolean[data.size() - 1];
 
+        System.out.println("Result size is + " + results.length);
+
         for (int i = 1; i < data.size(); i++) {
+            System.out.println("Processing number + " + data.get(i));
+
             results[i - 1] = fermatTest(data.get(i), k);
         }
+
+        System.out.println("Process completed.");
 
         info.parent.write(results);
     }
