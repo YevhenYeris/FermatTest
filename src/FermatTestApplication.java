@@ -12,16 +12,9 @@ public class FermatTestApplication {
     public static void main(String[] args) throws Exception {
 
         String inputValue = System.getenv("INPUT_VALUE");
-        System.out.println("Read INPUT_VALUE: " + inputValue + ".");
-
         String testPrecision = System.getenv("TEST_PRECISION");
-        System.out.println("Read TEST_PRECISION: " + inputValue + ".");
-
         String outputFile = System.getenv("OUTPUT_FILE");
-        System.out.println("Read OUTPUT_FILE: " + inputValue + ".");
-
         String workersNumberString = System.getenv("WORKERS_NUMBER");
-        System.out.println("Read WORKERS_NUMBER: " + inputValue + ".");
 
         task task = new task();
         task.addJarFile("FermatTest.jar");
